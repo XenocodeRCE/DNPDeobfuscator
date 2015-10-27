@@ -1,0 +1,11 @@
+c:\users\user\documents\visual studio 2013\Projects\DNPD\DNPD\bin\Debug\DNPD.exe.config
+c:\users\user\documents\visual studio 2013\Projects\DNPD\DNPD\bin\Debug\DNPD.exe
+c:\users\user\documents\visual studio 2013\Projects\DNPD\DNPD\bin\Debug\DNPD.pdb
+c:\users\user\documents\visual studio 2013\Projects\DNPD\DNPD\bin\Debug\dnlib.pdb
+c:\users\user\documents\visual studio 2013\Projects\DNPD\DNPD\bin\Debug\dnlib.xml
+c:\users\user\documents\visual studio 2013\Projects\DNPD\DNPD\obj\Debug\DNPD.csprojResolveAssemblyReference.cache
+c:\users\user\documents\visual studio 2013\Projects\DNPD\DNPD\obj\Debug\DNPD.Form1.resources
+c:\users\user\documents\visual studio 2013\Projects\DNPD\DNPD\obj\Debug\DNPD.Properties.Resources.resources
+c:\users\user\documents\visual studio 2013\Projects\DNPD\DNPD\obj\Debug\DNPD.csproj.GenerateResource.Cache
+c:\users\user\documents\visual studio 2013\Projects\DNPD\DNPD\obj\Debug\DNPD.exe
+c:\users\user\documents\visual studio 2013\Projects\DNPD\DNPD\obj\Debug\DNPD.pdb
