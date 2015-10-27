@@ -347,6 +347,13 @@ namespace DNPD
                                          */
                                         if (instr[2].Operand.ToString().ToLower().Contains("pow"))
                                         {
+
+                                            if (instr[0].Operand == OpCode.Call)
+                                            {
+                                                //HideCall is enabled :/ 
+                                                return;
+                                            }
+
                                             var param1 = instr[0].Operand.ToString();
                                             var param2 = instr[1].Operand.ToString();
                                             var a = (float) Convert.ToDouble(param1);
