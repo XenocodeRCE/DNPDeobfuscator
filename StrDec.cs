@@ -14,6 +14,8 @@ namespace DNPD
 {
     class StrDec
     {
+
+        //return 
         public static void SetresName()
         {
             var module = Form1.module;
@@ -46,6 +48,7 @@ namespace DNPD
         {
             return Encoding.Unicode.GetString(aaaa);
         }
+
 
         public static string Int2Text(string t, int n)
         {

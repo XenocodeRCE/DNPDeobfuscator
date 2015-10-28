@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using OpCodes = dnlib.DotNet.Emit.OpCodes;
@@ -258,12 +260,56 @@ namespace DNPD
                                         method.Body.Instructions.Count > 7*/)
                                     {
                                         var instr = method.Body.Instructions;
-                                        
+
+                                        if (instr[0].OpCode == OpCodes.Call)
+                                        {
+                                            //HideCall is enabled :/ 
+                                            var callmethod1 = instr[0].Operand.ToString();
+                                            callmethod1 = callmethod1.Replace("System.String ", "");
+                                            callmethod1 = callmethod1.Replace("()", "");
+                                            string[] xeno = Regex.Split(callmethod1, "::");
+                                            //0 -> type
+                                            //1 -> method
+                                            var a2 = GetStrCallValue1(module, xeno[1]);
+                                            if (a2 == null)
+                                            {
+                                                MessageBox.Show("{Error} Fix HideCall line 264 in Helpers.cs : Cannot fetch String value.");
+                                                goto MoveOnStrCallHidden;
+                                            }
+
+                                            var callmethod2 = instr[1].Operand.ToString();
+                                            callmethod2 = callmethod2.Replace("System.Int32 ", "");
+                                            callmethod2 = callmethod2.Replace("()", "");
+                                            string[] xeno2 = Regex.Split(callmethod2, "::");
+                                            //0 -> type
+                                            //1 -> method
+                                            var b2 = GetStrCallValue2(module, xeno2[1]);
+                                            if (b2 == 0)
+                                            {
+                                                MessageBox.Show("{Error} Fix HideCall line 353 in Helpers.cs : Cannot fetch Int value.");
+                                                goto MoveOnStrCallHidden;
+                                            }
+
+                                            try
+                                            {
+                                                var decryptedstringz = StrDec.Byte2Str(StrDec.b64(StrDec.Int2Text(a2, b2)));
+                                                GetCall(module, method, decryptedstringz);
+                                                goto MoveOnStrCallHidden;
+                                            }
+                                            catch (Exception)
+                                            {
+
+                                                goto MoveOnStrCallHidden;
+                                            }                                            
+                                        }
+
                                         var param1 = instr[0].GetLdcI4Value();
                                         var param2 = instr[2].GetLdcI4Value();
 
                                         var decryptedstring = DecryptStr(module, param1, param2, method);
                                         GetCall(module, method, decryptedstring);
+                                    MoveOnStrCallHidden:
+                                        var uselessvar = 2;
                                     }
                                 }
                             }
@@ -274,6 +320,209 @@ namespace DNPD
 
         }
 
+        public static string GetStrCallValue1(ModuleDefMD module, string inputmethod)
+        {
+            foreach (TypeDef type in module.Types)
+            {
+                foreach (MethodDef method in type.Methods)
+                {
+                    if (!method.HasBody) continue;
+
+                    if (method.Name == inputmethod)
+                    {
+                        var instr = method.Body.Instructions;
+                        var a =instr[0].Operand.ToString();
+                        return a;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public static int GetStrCallValue2(ModuleDefMD module, string inputmethod)
+        {
+            foreach (TypeDef type in module.Types)
+            {
+                foreach (MethodDef method in type.Methods)
+                {
+                    if (!method.HasBody) continue;
+
+                    if (method.Name == inputmethod)
+                    {
+                        List<Instruction> test = new List<Instruction>();
+                        var instrs = method.Body.Instructions;
+                        for (var i = 0; i < instrs.Count ; i++)
+                        {
+                            if (instrs[i].OpCode == OpCodes.Nop)
+                            {
+                               instrs.RemoveAt(i);
+                            }
+                        }
+                        for (var i = 0; i < instrs.Count; i++)
+                        {
+                            if (instrs[i].OpCode == OpCodes.Nop)
+                            {
+                                instrs.RemoveAt(i);
+                            }
+                        }
+                        for (var i = 0; i < instrs.Count; i++)
+                        {
+                            if (instrs[i].OpCode == OpCodes.Nop)
+                            {
+                                instrs.RemoveAt(i);
+                            }
+                        }
+                        for (var i = 0; i < instrs.Count; i++)
+                        {
+                            if (instrs[i].OpCode == OpCodes.Nop)
+                            {
+                                instrs.RemoveAt(i);
+                            }
+                        }
+                        for (var i = 0; i < instrs.Count; i++)
+                        {
+                            if (instrs[i].OpCode == OpCodes.Nop)
+                            {
+                                instrs.RemoveAt(i);
+                            }
+                        }
+                        for (var i = 0; i < instrs.Count; i++)
+                        {
+                            if (instrs[i].OpCode == OpCodes.Nop)
+                            {
+                                instrs.RemoveAt(i);
+                            }
+                        }
+                        for (var i = 0; i < instrs.Count; i++)
+                        {
+                            if (instrs[i].OpCode == OpCodes.Nop)
+                            {
+                                instrs.RemoveAt(i);
+                            }
+                        }
+                        var instr = method.Body.Instructions;
+
+                        if (instr[0].OpCode == OpCodes.Ldc_I4)
+                        {
+                            if (instr[1].OpCode == OpCodes.Ldc_I4)
+                            {
+                                if (instr[2].OpCode == OpCodes.Sub)
+                                {
+                                    if (instr[3].OpCode == OpCodes.Ldc_I4)
+                                    {
+                                        if (instr[4].OpCode == OpCodes.Sub)
+                                        {
+                                            var op11 = instr[0].GetLdcI4Value();
+                                            var op22 = instr[1].GetLdcI4Value();
+                                            var op33 = instr[3].GetLdcI4Value();
+                                            var resulta = op11 - op22 - op33;
+                                            return resulta;
+                                        }
+                                        if (instr[4].OpCode == OpCodes.Add)
+                                        {
+                                            var op11 = instr[0].GetLdcI4Value();
+                                            var op22 = instr[1].GetLdcI4Value();
+                                            var op33 = instr[3].GetLdcI4Value();
+                                            var resulta = op11 - op22 + op33;
+                                            return resulta;
+                                        }
+                                        if (instr[4].OpCode == OpCodes.Div)
+                                        {
+                                            var op11 = instr[0].GetLdcI4Value();
+                                            var op22 = instr[1].GetLdcI4Value();
+                                            var op33 = instr[3].GetLdcI4Value();
+                                            var resulta = op11 - op22 / op33;
+                                            return resulta;
+                                        }
+                                    }
+                                    //Math Operation has been spotted ! 
+                                    var op1 = instr[0].GetLdcI4Value();
+                                    var op2 = instr[1].GetLdcI4Value();
+                                    var result = op1 - op2;
+                                    return result;
+                                }
+                                if (instr[2].OpCode == OpCodes.Add)
+                                {
+                                    if (instr[3].OpCode == OpCodes.Ldc_I4)
+                                    {
+                                        if (instr[4].OpCode == OpCodes.Sub)
+                                        {
+                                            var op11 = instr[0].GetLdcI4Value();
+                                            var op22 = instr[1].GetLdcI4Value();
+                                            var op33 = instr[3].GetLdcI4Value();
+                                            var resulta = op11 + op22 - op33;
+                                            return resulta;
+                                        }
+                                        if (instr[4].OpCode == OpCodes.Add)
+                                        {
+                                            var op11 = instr[0].GetLdcI4Value();
+                                            var op22 = instr[1].GetLdcI4Value();
+                                            var op33 = instr[3].GetLdcI4Value();
+                                            var resulta = op11 + op22 + op33;
+                                            return resulta;
+                                        }
+                                        if (instr[4].OpCode == OpCodes.Div)
+                                        {
+                                            var op11 = instr[0].GetLdcI4Value();
+                                            var op22 = instr[1].GetLdcI4Value();
+                                            var op33 = instr[3].GetLdcI4Value();
+                                            var resulta = op11 + op22 / op33;
+                                            return resulta;
+                                        }
+                                    }
+                                    //Math Operation has been spotted ! 
+                                    var op1 = instr[0].GetLdcI4Value();
+                                    var op2 = instr[1].GetLdcI4Value();
+                                    var result = op1 + op2;
+                                    return result;
+
+                                }
+                                if (instr[2].OpCode == OpCodes.Div)
+                                {
+                                    if (instr[3].OpCode == OpCodes.Ldc_I4)
+                                    {
+                                        if (instr[4].OpCode == OpCodes.Sub)
+                                        {
+                                            var op11 = instr[0].GetLdcI4Value();
+                                            var op22 = instr[1].GetLdcI4Value();
+                                            var op33 = instr[3].GetLdcI4Value();
+                                            var resulta = op11 - op22 - op33;
+                                            return resulta;
+                                        }
+                                        if (instr[4].OpCode == OpCodes.Add)
+                                        {
+                                            var op11 = instr[0].GetLdcI4Value();
+                                            var op22 = instr[1].GetLdcI4Value();
+                                            var op33 = instr[3].GetLdcI4Value();
+                                            var resulta = op11 - op22 + op33;
+                                            return resulta;
+                                        }
+                                        if (instr[4].OpCode == OpCodes.Div)
+                                        {
+                                            var op11 = instr[0].GetLdcI4Value();
+                                            var op22 = instr[1].GetLdcI4Value();
+                                            var op33 = instr[3].GetLdcI4Value();
+                                            var resulta = op11 - op22 / op33;
+                                            return resulta;
+                                        }
+                                    }
+                                    //Math Operation has been spotted ! 
+                                    var op1 = instr[0].GetLdcI4Value();
+                                    var op2 = instr[1].GetLdcI4Value();
+                                    var result = op1 / op2;
+                                    return result;
+                                }
+                            }
+                            var a = instr[0].GetLdcI4Value();
+                            return a;
+                        }
+                        return 0;          
+                    }
+                }
+            }
+            return 0;
+        }
+     
         public static bool IsResEncrypted(ModuleDefMD module)
         {
             int numberOfMethods = 0;
@@ -348,10 +597,38 @@ namespace DNPD
                                         if (instr[2].Operand.ToString().ToLower().Contains("pow"))
                                         {
 
-                                            if (instr[0].Operand == OpCode.Call)
+                                            if (instr[0].OpCode == OpCodes.Call)
                                             {
                                                 //HideCall is enabled :/ 
-                                                return;
+                                                var callmethod1 = instr[0].Operand.ToString();
+                                                callmethod1 = callmethod1.Replace("System.Double ", "");
+                                                callmethod1 = callmethod1.Replace("()", "");
+                                                string[] xeno = Regex.Split(callmethod1, "::");
+                                                //0 -> type
+                                                //1 -> method
+                                                var a2 = GetDoubleValue(module, xeno[1]);
+                                                if (a2 == 0)
+                                                {
+                                                    MessageBox.Show("{Error} Fix HideCall line 353 in Helpers.cs : Cannot fetch Double value.");
+                                                    goto MoveOnCallHidden;
+                                                }
+
+                                                var callmethod2 = instr[1].Operand.ToString();
+                                                callmethod2 = callmethod2.Replace("System.Double ", "");
+                                                callmethod2 = callmethod2.Replace("()", "");
+                                                string[] xeno2 = Regex.Split(callmethod2, "::");
+                                                //0 -> type
+                                                //1 -> method
+                                                var b2 = GetDoubleValue(module, xeno2[1]);
+                                                if (b2 == 0)
+                                                {
+                                                    MessageBox.Show("{Error} Fix HideCall line 353 in Helpers.cs : Cannot fetch Double value.");
+                                                    goto MoveOnCallHidden;
+                                                }
+
+                                                var decryptedintz = Convert.ToInt32(Math.Pow(a2, b2));
+                                                GetCallInt(module, method, decryptedintz);
+                                                goto MoveOnCallHidden;
                                             }
 
                                             var param1 = instr[0].Operand.ToString();
@@ -360,6 +637,8 @@ namespace DNPD
                                             var b = (float) Convert.ToDouble(param2);
                                             var decryptedint = Convert.ToInt32(Math.Pow(a, b));
                                             GetCallInt(module, method, decryptedint);
+                                           MoveOnCallHidden :
+                                            var uselessvar = 2;
                                         }
                                     }
                                 }
@@ -368,6 +647,25 @@ namespace DNPD
                     }
                 }
             }
+        }
+
+        public static float GetDoubleValue(ModuleDefMD module, string inputmethod)
+        {
+            foreach (TypeDef type in module.Types)
+            {
+                foreach (MethodDef method in type.Methods)
+                {
+                    if (!method.HasBody) continue;
+
+                    if (method.Name == inputmethod)
+                    {
+                        var instr = method.Body.Instructions;
+                        var a = (float)Convert.ToDouble(instr[0].Operand.ToString());
+                        return a;
+                    }
+                }
+            }
+            return 0;
         }
 
         public static void GetCallInt(ModuleDefMD module, MethodDef inputmethod, int decryptedint)

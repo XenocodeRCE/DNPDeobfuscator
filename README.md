@@ -19,6 +19,9 @@ Here's a pseudo list of the things which are currently supported with DNPDeobfus
  - Resource Compression
  - Invalid OpCode -> I cheat on this one, nobody use it since it makes your file crashes.
  - Prune useless Methods / Types
+ - Call Hiding
+  - Call Hiding with Integers
+  - Call Hiding with Strings
  
 # HowTo
 
