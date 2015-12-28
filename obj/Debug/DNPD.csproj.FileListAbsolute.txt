@@ -9,3 +9,14 @@ c:\users\user\documents\visual studio 2013\Projects\DNPD\DNPD\obj\Debug\DNPD.Pro
 c:\users\user\documents\visual studio 2013\Projects\DNPD\DNPD\obj\Debug\DNPD.csproj.GenerateResource.Cache
 c:\users\user\documents\visual studio 2013\Projects\DNPD\DNPD\obj\Debug\DNPD.exe
 c:\users\user\documents\visual studio 2013\Projects\DNPD\DNPD\obj\Debug\DNPD.pdb
+C:\Users\User\Source\Repos\DNPDeobfuscator\bin\Debug\DNPD.exe.config
+C:\Users\User\Source\Repos\DNPDeobfuscator\obj\Debug\DNPD.exe
+C:\Users\User\Source\Repos\DNPDeobfuscator\obj\Debug\DNPD.pdb
+C:\Users\User\Source\Repos\DNPDeobfuscator\bin\Debug\DNPD.exe
+C:\Users\User\Source\Repos\DNPDeobfuscator\bin\Debug\DNPD.pdb
+C:\Users\User\Source\Repos\DNPDeobfuscator\bin\Debug\dnlib.pdb
+C:\Users\User\Source\Repos\DNPDeobfuscator\bin\Debug\dnlib.xml
+C:\Users\User\Source\Repos\DNPDeobfuscator\obj\Debug\DNPD.csprojResolveAssemblyReference.cache
+C:\Users\User\Source\Repos\DNPDeobfuscator\obj\Debug\DNPD.Form1.resources
+C:\Users\User\Source\Repos\DNPDeobfuscator\obj\Debug\DNPD.Properties.Resources.resources
+C:\Users\User\Source\Repos\DNPDeobfuscator\obj\Debug\DNPD.csproj.GenerateResource.Cache

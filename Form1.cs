@@ -115,11 +115,11 @@ namespace DNPD
         {
             module = ModuleDefMD.Load(textBox1.Text);
             asm = Assembly.LoadFile(textBox1.Text);
-            if (!Checker.IsDNP.Check(module))
-            {
-                label2.Text = "Not a DNP protectedt file !";
-                return;
-            }
+            //if (!Checker.IsDNP.Check(module))
+            //{
+            //    label2.Text = "Not a DNP protectedt file !";
+            //    return;
+            //}
                 
 
             //Remove Anti
@@ -179,6 +179,11 @@ namespace DNPD
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
         }
       
     }

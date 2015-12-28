@@ -402,7 +402,7 @@ namespace DNPD
                         }
                         var instr = method.Body.Instructions;
 
-                        if (instr[0].OpCode == OpCodes.Ldc_I4)
+                        if (instr[0].IsLdcI4())
                         {
                             if (instr[1].OpCode == OpCodes.Ldc_I4)
                             {
