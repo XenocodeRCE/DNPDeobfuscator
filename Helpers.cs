@@ -283,7 +283,7 @@ namespace DNPD
                                             string[] xeno2 = Regex.Split(callmethod2, "::");
                                             //0 -> type
                                             //1 -> method
-                                            var b2 = GetStrCallValue2(module, xeno2[1]);
+                                            var b2 = GetStrCallValue2(module, xeno2[1], xeno2[0]);
                                             if (b2 == 0)
                                             {
                                                 MessageBox.Show("{Error} Fix HideCall line 353 in Helpers.cs : Cannot fetch Int value.");
@@ -339,10 +339,12 @@ namespace DNPD
             return null;
         }
 
-        public static int GetStrCallValue2(ModuleDefMD module, string inputmethod)
+        public static int GetStrCallValue2(ModuleDefMD module, string inputmethod, string inputype)
         {
             foreach (TypeDef type in module.Types)
             {
+                if (type.Name != inputype) continue;
+                    
                 foreach (MethodDef method in type.Methods)
                 {
                     if (!method.HasBody) continue;
@@ -639,6 +641,36 @@ namespace DNPD
                                             GetCallInt(module, method, decryptedint);
                                            MoveOnCallHidden :
                                             var uselessvar = 2;
+                                        }
+                                    }
+                                }
+                                else if (!method.IsHideBySig && method.IsStatic && !method.HasParamDefs &&
+                                          method.Body.Instructions.Count < 10)
+                                {
+                                     var instr = method.Body.Instructions;
+                                    if (instr[0].OpCode == OpCodes.Ldstr)
+                                    {
+                                        if (instr[1].IsLdcI4())
+                                        {
+                                            var param1 = instr[0].Operand.ToString();
+                                            var param2 = instr[1].GetLdcI4Value();
+                                            var decryptedint = StrDec.DecryptDataNoRes(param1, param2);
+                                            if (decryptedint != 0)
+                                            {
+                                                GetCallInt(module, method, decryptedint);
+                                            }
+                                        }
+                                        if (instr[1].OpCode == OpCodes.Call)
+                                        {
+                                            if (instr[2].OpCode == OpCodes.Call)
+                                            {
+                                                var param1 = instr[0].Operand.ToString();
+                                                var decryptedint = StrDec.ResolveInt(StrDec.DecryptExpression(param1));
+                                                if (decryptedint != 0)
+                                                {
+                                                    GetCallInt(module, method, decryptedint);
+                                                }
+                                            }
                                         }
                                     }
                                 }

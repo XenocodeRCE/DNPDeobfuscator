@@ -136,12 +136,10 @@ namespace DNPD
             return result;
         }
 
+
         public static int DecryptResData(string TKRP, int iUYA)
         {
-            string[] array = TKRP.Split(new char[]
-		{
-			Strings.ChrW(iUYA)
-		});
+            string[] array = TKRP.Split(Strings.ChrW(iUYA));
             checked
             {
                 int[] array2 = new int[array.Length - 1 - 1 + 1];
@@ -153,6 +151,29 @@ namespace DNPD
                 }
                 return array2[array2[array2.Length - 1]];
             }
+        }
+
+        public static int DecryptDataNoRes(string string_0, int int_0)
+        {
+            try
+            {
+                char[] separator = new char[(-368 / sizeof(bool)) + ((0x200 - sizeof(long)) - ((-56 + sizeof(decimal)) + ((0x240 - sizeof(sbyte)) - 400)))];
+                separator[(0x14b / sizeof(byte)) - ((0x35f - sizeof(decimal)) - ((0x200 - sizeof(byte)) + ((-302 - sizeof(long)) + ((-93 - sizeof(int)) + ((0x444 / sizeof(byte)) - ((0x473 + sizeof(byte)) - ((0x1dd - sizeof(long)) - ((0x314 + sizeof(bool)) - ((0x213 - sizeof(long)) + ((0x389 - sizeof(short)) - 0x286))))))))))] = Strings.ChrW(int_0);
+                string[] strArray = string_0.Split(separator);
+                int[] numArray = new int[((strArray.Length - 1) - 1) + 1];
+                int num3 = numArray.Length - 1;
+                for (int i = 0; i <= num3; i++)
+                {
+                    numArray[i] = int.Parse(strArray[i]);
+                }
+                return numArray[numArray[numArray.Length - 1]];
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+
+            
         }
     }
 
